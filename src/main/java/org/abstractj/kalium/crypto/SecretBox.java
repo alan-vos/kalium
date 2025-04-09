@@ -24,7 +24,7 @@ import static org.abstractj.kalium.crypto.Util.*;
 
 public class SecretBox {
 
-    private byte[] key;
+    private final byte[] key;
 
     public SecretBox(byte[] key) {
         this.key = key;

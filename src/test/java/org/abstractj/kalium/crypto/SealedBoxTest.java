@@ -13,74 +13,74 @@ import static org.junit.Assert.assertArrayEquals;
 public class SealedBoxTest {
 
     @Test
-    public void testEncryptDecrypt() throws Exception {
-        SecureRandom r = new SecureRandom();
-        KeyPair keyPair = new KeyPair(new byte[CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES]);
-        byte[] sk = keyPair.getPrivateKey().toBytes();
-        byte[] pk = keyPair.getPublicKey().toBytes();
-        byte[] m = new byte[r.nextInt(1000)];
+    public void testEncryptDecrypt()  {
+        final SecureRandom r = new SecureRandom();
+        final KeyPair keyPair = new KeyPair(new byte[CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES]);
+        final byte[] sk = keyPair.getPrivateKey().toBytes();
+        final byte[] pk = keyPair.getPublicKey().toBytes();
+        final byte[] m = new byte[r.nextInt(1000)];
 
         r.nextBytes(m);
-        SealedBox sb = new SealedBox(pk);
-        byte[] c = sb.encrypt(m);
+        final SealedBox sb = new SealedBox(pk);
+        final byte[] c = sb.encrypt(m);
 
-        SealedBox sb2 = new SealedBox(pk, sk);
-        byte[] m2 = sb2.decrypt(c);
+        final SealedBox sb2 = new SealedBox(pk, sk);
+        final byte[] m2 = sb2.decrypt(c);
         assertArrayEquals(m, m2);
     }
 
     @Test
-    public void testEncryptDecryptMultPublicKeys() throws Exception {
-        SecureRandom r = new SecureRandom();
-        KeyPair keyPair = new KeyPair(new byte[CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES]);
-        byte[] sk = keyPair.getPrivateKey().toBytes();
-        byte[] pk1 = keyPair.getPublicKey().toBytes();
-        byte[] pk2 = new byte[pk1.length];
+    public void testEncryptDecryptMultPublicKeys()  {
+        final SecureRandom r = new SecureRandom();
+        final KeyPair keyPair = new KeyPair(new byte[CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES]);
+        final byte[] sk = keyPair.getPrivateKey().toBytes();
+        final byte[] pk1 = keyPair.getPublicKey().toBytes();
+        final byte[] pk2 = new byte[pk1.length];
 
         sodium().crypto_scalarmult_base(pk2, sk);
 
-        byte[] m = new byte[r.nextInt(1000)];
+        final byte[] m = new byte[r.nextInt(1000)];
         r.nextBytes(m);
 
-        SealedBox sb1 = new SealedBox(pk1);
-        byte[] c1 = sb1.encrypt(m);
+        final SealedBox sb1 = new SealedBox(pk1);
+        final byte[] c1 = sb1.encrypt(m);
 
-        SealedBox sb2 = new SealedBox(pk2);
-        byte[] c2 = sb2.encrypt(m);
+        final SealedBox sb2 = new SealedBox(pk2);
+        final byte[] c2 = sb2.encrypt(m);
 
-        SealedBox sb3 = new SealedBox(pk1, sk);
-        byte[] m2 = sb3.decrypt(c1);
-        byte[] m3 = sb3.decrypt(c2);
+        final SealedBox sb3 = new SealedBox(pk1, sk);
+        final byte[] m2 = sb3.decrypt(c1);
+        final byte[] m3 = sb3.decrypt(c2);
         assertArrayEquals(m, m2);
         assertArrayEquals(m2, m3);
     }
 
     @Test(expected = RuntimeException.class)
-    public void testDecryptFailsFlippedKeys() throws Exception {
-        SecureRandom r = new SecureRandom();
-        byte[] pk = new byte[CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES];
-        byte[] sk = new byte[CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES];
-        byte[] m = new byte[r.nextInt(1000)];
+    public void testDecryptFailsFlippedKeys()  {
+        final SecureRandom r = new SecureRandom();
+        final byte[] pk = new byte[CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES];
+        final byte[] sk = new byte[CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES];
+        final byte[] m = new byte[r.nextInt(1000)];
 
         sodium().crypto_box_curve25519xsalsa20poly1305_keypair(pk, sk);
         r.nextBytes(m);
 
-        SealedBox sb = new SealedBox(pk);
-        byte[] c = sb.encrypt(m);
-        SealedBox sb2 = new SealedBox(sk, pk);
+        final SealedBox sb = new SealedBox(pk);
+        final byte[] c = sb.encrypt(m);
+        final SealedBox sb2 = new SealedBox(sk, pk);
         sb2.decrypt(c);
     }
 
     @Test(expected = RuntimeException.class)
-    public void testDecryptFailsWithNull() throws Exception {
-        SecureRandom r = new SecureRandom();
-        byte[] pk = null;
-        byte[] sk = null;
-        byte[] m = new byte[r.nextInt(1000)];
+    public void testDecryptFailsWithNull()  {
+        final SecureRandom r = new SecureRandom();
+        final byte[] pk = null;
+        final byte[] sk = null;
+        final byte[] m = new byte[r.nextInt(1000)];
 
-        SealedBox sb = new SealedBox(pk);
-        byte[] c = sb.encrypt(m);
-        SealedBox sb2 = new SealedBox(sk, pk);
+        final SealedBox sb = new SealedBox(pk);
+        final byte[] c = sb.encrypt(m);
+        final SealedBox sb2 = new SealedBox(sk, pk);
         sb2.decrypt(c);
     }
 }

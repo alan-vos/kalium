@@ -11,39 +11,39 @@ import static org.junit.Assert.assertArrayEquals;
 public class AeadTest {
     @Test
     public void testEncrypt() {
-        byte[] key = HEX.decode(AEAD_KEY);
-        byte[] publicNonce = HEX.decode(AEAD_NONCE);
-        byte[] message = HEX.decode(AEAD_MESSAGE);
-        byte[] ad = HEX.decode(AEAD_AD);
+        final byte[] key = HEX.decode(AEAD_KEY);
+        final byte[] publicNonce = HEX.decode(AEAD_NONCE);
+        final byte[] message = HEX.decode(AEAD_MESSAGE);
+        final byte[] ad = HEX.decode(AEAD_AD);
 
-        Aead aead = new Aead(key);
-        byte[] ct = aead.encrypt(publicNonce, message, ad);
+        final Aead aead = new Aead(key);
+        final byte[] ct = aead.encrypt(publicNonce, message, ad);
         assertArrayEquals(HEX.decode(AEAD_CT), ct);
     }
 
     @Test
     public void testDecrypt() {
-        byte[] key = HEX.decode(AEAD_KEY);
-        byte[] publicNonce = HEX.decode(AEAD_NONCE);
-        byte[] ct = HEX.decode(AEAD_CT);
-        byte[] ad = HEX.decode(AEAD_AD);
+        final byte[] key = HEX.decode(AEAD_KEY);
+        final byte[] publicNonce = HEX.decode(AEAD_NONCE);
+        final byte[] ct = HEX.decode(AEAD_CT);
+        final byte[] ad = HEX.decode(AEAD_AD);
 
-        Aead aead = new Aead(key);
-        byte[] message = aead.decrypt(publicNonce, ct, ad);
+        final Aead aead = new Aead(key);
+        final byte[] message = aead.decrypt(publicNonce, ct, ad);
         assertArrayEquals(HEX.decode(AEAD_MESSAGE), message);
     }
 
     @Test
     public void testAES256GCM() {
         sodium().sodium_init();
-        byte[] key = HEX.decode(AEAD_KEY);
-        byte[] publicNonce = new Random().randomBytes(NaCl.Sodium.CRYPTO_AEAD_AES256GCM_NPUBBYTES);
-        byte[] message = HEX.decode(AEAD_MESSAGE);
-        byte[] ad = HEX.decode(AEAD_AD);
+        final byte[] key = HEX.decode(AEAD_KEY);
+        final byte[] publicNonce = new Random().randomBytes(NaCl.Sodium.CRYPTO_AEAD_AES256GCM_NPUBBYTES);
+        final byte[] message = HEX.decode(AEAD_MESSAGE);
+        final byte[] ad = HEX.decode(AEAD_AD);
 
-        Aead aead = new Aead(key).useAesGcm();
-        byte[] ct = aead.encrypt(publicNonce, message, ad);
-        byte[] msg2 = aead.decrypt(publicNonce, ct, ad);
+        final Aead aead = new Aead(key).useAesGcm();
+        final byte[] ct = aead.encrypt(publicNonce, message, ad);
+        final byte[] msg2 = aead.decrypt(publicNonce, ct, ad);
         assertArrayEquals(message, msg2);
     }
 }

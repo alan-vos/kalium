@@ -26,16 +26,15 @@ public class Random {
      * Generate random bytes
      *
      * @param n number or random bytes
-     * @return
      */
     public byte[] randomBytes(int n) {
-        byte[] buffer = new byte[n];
+        final byte[] buffer = new byte[n];
         sodium().randombytes(buffer, n);
         return buffer;
     }
 
     public byte[] randomBytes() {
-        byte[] buffer = new byte[DEFAULT_SIZE];
+        final byte[] buffer = new byte[DEFAULT_SIZE];
         sodium().randombytes(buffer, DEFAULT_SIZE);
         return buffer;
     }
