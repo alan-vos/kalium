@@ -22,7 +22,7 @@ import static org.abstractj.kalium.crypto.Util.checkLength;
 
 public class Advanced {
 
-    public byte[] crypto_stream_xsalsa20_xor(byte[] message, byte[] nonce, byte[] key) {
+    public byte[] crypto_stream_xsalsa20_xor(final byte[] message, final byte[] nonce, final byte[] key) {
 
         checkLength(nonce, CRYPTO_STREAM_NONCEBYTES);
         checkLength(key, CRYPTO_STREAM_KEYBYTES);

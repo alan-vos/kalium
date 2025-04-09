@@ -23,6 +23,7 @@ import jnr.ffi.annotations.Out;
 import jnr.ffi.byref.LongLongByReference;
 import jnr.ffi.types.u_int64_t;
 
+@SuppressWarnings("unused")
 public class NaCl {
 
     public static Sodium sodium() {
@@ -57,13 +58,13 @@ public class NaCl {
 
     private static boolean versionSupported = false;
 
-    private static final void checkVersion(Sodium lib) {
+    private static void checkVersion(Sodium lib) {
         if (!versionSupported) {
             String[] version = lib.sodium_version_string().split("\\.");
             versionSupported = version.length >= 3 &&
-                MIN_SUPPORTED_VERSION[0] <= new Integer(version[0]) &&
-                MIN_SUPPORTED_VERSION[1] <= new Integer(version[1]) &&
-                MIN_SUPPORTED_VERSION[2] <= new Integer(version[2]);
+                MIN_SUPPORTED_VERSION[0] <= Integer.parseInt(version[0]) &&
+                MIN_SUPPORTED_VERSION[1] <= Integer.parseInt(version[1]) &&
+                MIN_SUPPORTED_VERSION[2] <= Integer.parseInt(version[2]);
         }
         if (!versionSupported) {
             String message = String.format("Unsupported libsodium version: %s. Please update",
@@ -80,7 +81,7 @@ public class NaCl {
         /**
          * This function isn't thread safe. Be sure to call it once, and before
          * performing other operations.
-         *
+         * <p>
          * Check libsodium's documentation for more info.
          */
         int sodium_init();
@@ -504,7 +505,7 @@ public class NaCl {
     /**
      * This is a Java synchronized wrapper around libsodium's init function.
      * LibSodium's init function is not thread-safe.
-     *
+     * <p>
      * Check libsodium's documentation for more info.
      */
     public static synchronized int init() {

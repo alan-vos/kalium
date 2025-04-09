@@ -6,9 +6,10 @@ import static org.abstractj.kalium.NaCl.Sodium.*;
 import static org.abstractj.kalium.NaCl.sodium;
 import static org.abstractj.kalium.crypto.Util.*;
 
+@SuppressWarnings("unused")
 public class Aead {
 
-    private byte[] key;
+    private final byte[] key;
 
     private boolean aesGcm = false;
 
@@ -25,10 +26,6 @@ public class Aead {
     }
 
     public Aead useAesGcm() {
-        if (sodium().crypto_aead_aes256gcm_is_available() != 1) {
-            throw new RuntimeException("AES-GCM requires hardware support");
-        }
-
         aesGcm = true;
         return this;
     }

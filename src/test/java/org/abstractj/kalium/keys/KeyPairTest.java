@@ -1,12 +1,12 @@
 /**
  * Copyright 2013 Bruno Oliveira, and individual contributors
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,26 +16,21 @@
 
 package org.abstractj.kalium.keys;
 
-import org.junit.Ignore;
 import org.junit.Test;
-
-import java.util.Arrays;
 
 import static org.abstractj.kalium.encoders.Encoder.HEX;
 import static org.abstractj.kalium.fixture.TestVectors.BOB_PRIVATE_KEY;
 import static org.abstractj.kalium.fixture.TestVectors.BOB_PUBLIC_KEY;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 public class KeyPairTest {
 
     @Test
     public void testGenerateKeyPair() {
         try {
-            KeyPair key = new KeyPair();
-            assertTrue(key.getPrivateKey() != null);
-            assertTrue(key.getPublicKey() != null);
+            final KeyPair key = new KeyPair();
+            assertNotNull(key.getPrivateKey());
+            assertNotNull(key.getPublicKey());
         } catch (Exception e) {
             fail("Should return a valid key size");
         }
@@ -44,7 +39,7 @@ public class KeyPairTest {
     @Test
     public void testAcceptsValidKey() {
         try {
-            byte[] rawKey = HEX.decode(BOB_PRIVATE_KEY);
+            final byte[] rawKey = HEX.decode(BOB_PRIVATE_KEY);
             new KeyPair(rawKey);
         } catch (Exception e) {
             fail("Should not raise any exception");
@@ -61,32 +56,32 @@ public class KeyPairTest {
     }
 
     @Test(expected = RuntimeException.class)
-    public void testRejectNullKey() throws Exception {
-        byte[] privateKey = null;
-        new KeyPair(privateKey);
+    public void testRejectNullKey() {
+        final byte[] privateKey = null;
+        new KeyPair(null);
         fail("Should reject null keys");
     }
 
     @Test(expected = RuntimeException.class)
-    public void testRejectShortKey() throws Exception {
-        byte[] privateKey = "short".getBytes();
+    public void testRejectShortKey() {
+        final byte[] privateKey = "short".getBytes();
         new KeyPair(privateKey);
         fail("Should reject null keys");
     }
 
     @Test
-    public void testGeneratePublicKey() throws Exception {
+    public void testGeneratePublicKey() {
         try {
-            byte[] pk = HEX.decode(BOB_PRIVATE_KEY);
-            KeyPair key = new KeyPair(pk);
-            assertTrue(key.getPublicKey() != null);
+            final byte[] pk = HEX.decode(BOB_PRIVATE_KEY);
+            final KeyPair key = new KeyPair(pk);
+            assertNotNull(key.getPublicKey());
         } catch (Exception e) {
             fail("Should return a valid key size");
         }
     }
 
     @Test
-    public void testPrivateKeyToString() throws Exception {
+    public void testPrivateKeyToString() {
         try {
             KeyPair key = new KeyPair(BOB_PRIVATE_KEY, HEX);
             assertEquals("Correct private key expected", BOB_PRIVATE_KEY, key.getPrivateKey().toString());
@@ -96,20 +91,19 @@ public class KeyPairTest {
     }
 
     @Test
-    public void testPrivateKeyToBytes() throws Exception {
+    public void testPrivateKeyToBytes() {
         try {
-            KeyPair key = new KeyPair(BOB_PRIVATE_KEY, HEX);
-            assertTrue("Correct private key expected", Arrays.equals(HEX.decode(BOB_PUBLIC_KEY),
-                    key.getPublicKey().toBytes()));
+            final KeyPair key = new KeyPair(BOB_PRIVATE_KEY, HEX);
+            assertArrayEquals("Correct private key expected", HEX.decode(BOB_PUBLIC_KEY), key.getPublicKey().toBytes());
         } catch (Exception e) {
             fail("Should return a valid key size");
         }
     }
 
     @Test
-    public void testPublicKeyToString() throws Exception {
+    public void testPublicKeyToString() {
         try {
-            KeyPair key = new KeyPair(BOB_PRIVATE_KEY, HEX);
+            final KeyPair key = new KeyPair(BOB_PRIVATE_KEY, HEX);
             assertEquals("Correct public key expected", BOB_PUBLIC_KEY, key.getPublicKey().toString());
         } catch (Exception e) {
             fail("Should return a valid key size");
@@ -119,24 +113,24 @@ public class KeyPairTest {
 
     /**
      * TODO: This unit test is a friendly reminder to be investigated
+     *
      * @see <a href="https://github.com/abstractj/kalium/pull/9</a>
      */
 
-    @Ignore
+    /*@Ignore
     @Test
-    public void testPublicKeyShouldBeProperlyCalculated(){
-        KeyPair kp = new KeyPair();
-        KeyPair kp2 = new KeyPair(kp.getPrivateKey().toBytes());
+    public void testPublicKeyShouldBeProperlyCalculated() {
+        final KeyPair kp = new KeyPair();
+        final KeyPair kp2 = new KeyPair(kp.getPrivateKey().toBytes());
         assertEquals("Private key should be the same", kp.getPrivateKey().toBytes(), kp2.getPrivateKey().toBytes());
         assertEquals("Public key should be the same", kp.getPublicKey().toBytes(), kp2.getPublicKey().toBytes());
-    }
+    }*/
 
     @Test
-    public void testPublicKeyToBytes() throws Exception {
+    public void testPublicKeyToBytes() {
         try {
-            KeyPair key = new KeyPair(BOB_PRIVATE_KEY, HEX);
-            assertTrue("Correct public key expected", Arrays.equals(HEX.decode(BOB_PUBLIC_KEY),
-                    key.getPublicKey().toBytes()));
+            final KeyPair key = new KeyPair(BOB_PRIVATE_KEY, HEX);
+            assertArrayEquals("Correct public key expected", HEX.decode(BOB_PUBLIC_KEY), key.getPublicKey().toBytes());
         } catch (Exception e) {
             fail("Should return a valid key size");
         }

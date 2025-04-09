@@ -8,8 +8,8 @@ import static org.abstractj.kalium.crypto.Util.isValid;
 
 public class SealedBox {
 
-    private byte[] publicKey;
-    private byte[] privateKey;
+    private final byte[] publicKey;
+    private final byte[] privateKey;
 
     public SealedBox(byte[] publicKey) {
         this.publicKey = publicKey;

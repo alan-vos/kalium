@@ -1,12 +1,12 @@
 /**
  * Copyright 2013 Bruno Oliveira, and individual contributors
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,7 +18,6 @@ package org.abstractj.kalium.keys;
 
 import jnr.ffi.byref.LongLongByReference;
 import org.abstractj.kalium.crypto.Random;
-import org.abstractj.kalium.crypto.Util;
 import org.abstractj.kalium.encoders.Encoder;
 
 import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES;
@@ -27,7 +26,6 @@ import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_SIGN_ED25519_BYTES;
 import static org.abstractj.kalium.NaCl.sodium;
 import static org.abstractj.kalium.crypto.Util.checkLength;
 import static org.abstractj.kalium.crypto.Util.isValid;
-import static org.abstractj.kalium.crypto.Util.slice;
 import static org.abstractj.kalium.crypto.Util.zeros;
 import static org.abstractj.kalium.encoders.Encoder.HEX;
 
