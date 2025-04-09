@@ -16,6 +16,8 @@
 
 package org.abstractj.kalium.crypto;
 
+import jnr.ffi.annotations.IgnoreError;
+
 import static org.abstractj.kalium.NaCl.sodium;
 
 public class Random {
@@ -27,12 +29,14 @@ public class Random {
      *
      * @param n number or random bytes
      */
-    public byte[] randomBytes(int n) {
+    @IgnoreError
+    public byte[] randomBytes(final int n) {
         final byte[] buffer = new byte[n];
         sodium().randombytes(buffer, n);
         return buffer;
     }
 
+    @IgnoreError
     public byte[] randomBytes() {
         final byte[] buffer = new byte[DEFAULT_SIZE];
         sodium().randombytes(buffer, DEFAULT_SIZE);

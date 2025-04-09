@@ -33,21 +33,23 @@ public class Point {
         this.point = HEX.decode(STANDARD_GROUP_ELEMENT);
     }
 
-    public Point(byte[] point) {
+    public Point(final byte[] point) {
         this.point = point;
     }
 
-    public Point(String point, Encoder encoder) {
+    public Point(final String point,
+                 final Encoder encoder) {
         this(encoder.decode(point));
     }
 
-    public Point mult(byte[] n) {
-        byte[] result = zeros(CRYPTO_SCALARMULT_CURVE25519_SCALARBYTES);
+    public Point mult(final byte[] n) {
+        final byte[] result = zeros(CRYPTO_SCALARMULT_CURVE25519_SCALARBYTES);
         sodium().crypto_scalarmult_curve25519(result, n, point);
         return new Point(result);
     }
 
-    public Point mult(String n, Encoder encoder) {
+    public Point mult(final String n,
+                      final Encoder encoder) {
         return mult(encoder.decode(n));
     }
 

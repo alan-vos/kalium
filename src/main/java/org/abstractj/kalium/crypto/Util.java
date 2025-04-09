@@ -21,30 +21,34 @@ import java.util.Arrays;
 @SuppressWarnings("unused")
 public class Util {
 
-    private Util(){
+    private Util() {
         // Private constructor
     }
 
-    public static byte[] prependZeros(int n, byte[] message) {
-        byte[] result = new byte[n + message.length];
+    public static byte[] prependZeros(final int n,
+                                      final byte[] message) {
+        final byte[] result = new byte[n + message.length];
         System.arraycopy(message, 0, result, n, message.length);
         return result;
     }
 
-    public static byte[] removeZeros(int n, byte[] message) {
+    public static byte[] removeZeros(final int n,
+                                     final byte[] message) {
         return Arrays.copyOfRange(message, n, message.length);
     }
 
-    public static void checkLength(byte[] data, int size) {
+    public static void checkLength(final byte[] data,
+                                   final int size) {
         if (data == null || data.length != size)
             throw new RuntimeException("Invalid size");
     }
 
-    public static byte[] zeros(int n) {
+    public static byte[] zeros(final int n) {
         return new byte[n];
     }
 
-    public static boolean isValid(int status, String message) {
+    public static boolean isValid(final int status,
+                                  final String message) {
         if (status != 0)
             throw new RuntimeException(message);
         return true;
@@ -54,8 +58,9 @@ public class Util {
         return Arrays.copyOfRange(buffer, start, end);
     }
 
-    public static byte[] merge(byte[] signature, byte[] message) {
-        byte[] result = new byte[signature.length + message.length];
+    public static byte[] merge(final byte[] signature,
+                               final byte[] message) {
+        final byte[] result = new byte[signature.length + message.length];
         System.arraycopy(signature, 0, result, 0, signature.length);
         System.arraycopy(message, 0, result, signature.length, message.length);
         return result;

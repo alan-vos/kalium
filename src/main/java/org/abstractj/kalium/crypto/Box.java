@@ -16,6 +16,7 @@
 
 package org.abstractj.kalium.crypto;
 
+import jnr.ffi.annotations.IgnoreError;
 import org.abstractj.kalium.NaCl;
 import org.abstractj.kalium.encoders.Encoder;
 import org.abstractj.kalium.keys.PrivateKey;
@@ -32,47 +33,63 @@ public class Box {
 
     private final byte[] sharedKey;
 
-    public Box(byte[] publicKey, byte[] privateKey) {
+    @IgnoreError
+    public Box(final byte[] publicKey,
+               final byte[] privateKey) {
         checkLength(publicKey, CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES);
         checkLength(privateKey, CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES);
-
         sharedKey = new byte[NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_BEFORENMBYTES];
         isValid(sodium().crypto_box_curve25519xsalsa20poly1305_beforenm(
                 sharedKey, publicKey, privateKey), "Key agreement failed");
     }
 
-    public Box(PublicKey publicKey, PrivateKey privateKey) {
+    @IgnoreError
+    public Box(final PublicKey publicKey,
+               final PrivateKey privateKey) {
         this(publicKey.toBytes(), privateKey.toBytes());
     }
 
-    public Box(String publicKey, String privateKey, Encoder encoder) {
+    @IgnoreError
+    public Box(final String publicKey,
+               final String privateKey,
+               final Encoder encoder) {
         this(encoder.decode(publicKey), encoder.decode(privateKey));
     }
 
-    public byte[] encrypt(byte[] nonce, byte[] message) {
+    @IgnoreError
+    public byte[] encrypt(final byte[] nonce,
+                          final byte[] message) {
         checkLength(nonce, CRYPTO_BOX_CURVE25519XSALSA20POLY1305_NONCEBYTES);
-        byte[] msg = prependZeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_ZEROBYTES, message);
-        byte[] ct = new byte[msg.length];
+        final byte[] msg = prependZeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_ZEROBYTES, message);
+        final byte[] ct = new byte[msg.length];
         isValid(sodium().crypto_box_curve25519xsalsa20poly1305_afternm(ct, msg,
                 msg.length, nonce, sharedKey), "Encryption failed");
         return removeZeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_BOXZEROBYTES, ct);
     }
 
-    public byte[] encrypt(String nonce, String message, Encoder encoder) {
+    @IgnoreError
+    public byte[] encrypt(final String nonce,
+                          final String message,
+                          final Encoder encoder) {
         return encrypt(encoder.decode(nonce), encoder.decode(message));
     }
 
-    public byte[] decrypt(byte[] nonce, byte[] ciphertext) {
+    @IgnoreError
+    public byte[] decrypt(final byte[] nonce,
+                          final byte[] ciphertext) {
         checkLength(nonce, CRYPTO_BOX_CURVE25519XSALSA20POLY1305_NONCEBYTES);
-        byte[] ct = prependZeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_BOXZEROBYTES, ciphertext);
-        byte[] message = new byte[ct.length];
+        final byte[] ct = prependZeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_BOXZEROBYTES, ciphertext);
+        final byte[] message = new byte[ct.length];
         isValid(sodium().crypto_box_curve25519xsalsa20poly1305_open_afternm(
                         message, ct, message.length, nonce, sharedKey),
                 "Decryption failed. Ciphertext failed verification.");
         return removeZeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_ZEROBYTES, message);
     }
 
-    public byte[] decrypt(String nonce, String ciphertext, Encoder encoder) {
+    @IgnoreError
+    public byte[] decrypt(final String nonce,
+                          final String ciphertext,
+                          final Encoder encoder) {
         return decrypt(encoder.decode(nonce), encoder.decode(ciphertext));
     }
 }

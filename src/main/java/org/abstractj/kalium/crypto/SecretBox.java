@@ -16,6 +16,7 @@
 
 package org.abstractj.kalium.crypto;
 
+import jnr.ffi.annotations.IgnoreError;
 import org.abstractj.kalium.encoders.Encoder;
 
 import static org.abstractj.kalium.NaCl.Sodium.*;
@@ -26,28 +27,33 @@ public class SecretBox {
 
     private final byte[] key;
 
-    public SecretBox(byte[] key) {
+    public SecretBox(final byte[] key) {
         this.key = key;
         checkLength(key, CRYPTO_SECRETBOX_XSALSA20POLY1305_KEYBYTES);
     }
 
-    public SecretBox(String key, Encoder encoder) {
+    public SecretBox(final String key,
+                     final Encoder encoder) {
         this(encoder.decode(key));
     }
 
-    public byte[] encrypt(byte[] nonce, byte[] message) {
+    @IgnoreError
+    public byte[] encrypt(final byte[] nonce,
+                          final byte[] message) {
         checkLength(nonce, CRYPTO_SECRETBOX_XSALSA20POLY1305_NONCEBYTES);
-        byte[] msg = Util.prependZeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_ZEROBYTES, message);
-        byte[] ct = Util.zeros(msg.length);
+        final byte[] msg = Util.prependZeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_ZEROBYTES, message);
+        final byte[] ct = Util.zeros(msg.length);
         isValid(sodium().crypto_secretbox_xsalsa20poly1305(ct, msg, msg.length,
                 nonce, key), "Encryption failed");
         return removeZeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_BOXZEROBYTES, ct);
     }
 
-    public byte[] decrypt(byte[] nonce, byte[] ciphertext) {
+    @IgnoreError
+    public byte[] decrypt(final byte[] nonce,
+                          final byte[] ciphertext) {
         checkLength(nonce, CRYPTO_SECRETBOX_XSALSA20POLY1305_NONCEBYTES);
-        byte[] ct = Util.prependZeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_BOXZEROBYTES, ciphertext);
-        byte[] message = Util.zeros(ct.length);
+        final byte[] ct = Util.prependZeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_BOXZEROBYTES, ciphertext);
+        final byte[] message = Util.zeros(ct.length);
         isValid(sodium().crypto_secretbox_xsalsa20poly1305_open(message, ct,
                 ct.length, nonce, key), "Decryption failed. Ciphertext failed verification");
         return removeZeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_ZEROBYTES, message);

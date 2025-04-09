@@ -1,5 +1,6 @@
 package org.abstractj.kalium.crypto;
 
+import jnr.ffi.annotations.IgnoreError;
 import org.abstractj.kalium.encoders.Encoder;
 
 import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_PWHASH_SCRYPTSALSA208SHA256_OUTBYTES;
@@ -10,30 +11,53 @@ public class Password {
 
     public Password() {
     }
-    public byte[] deriveKey(int length, byte[] passwd, byte[] salt, int opslimit, long memlimit) {
-        byte[] buffer = new byte[length];
+
+    @IgnoreError
+    public byte[] deriveKey(final int length,
+                            final byte[] passwd,
+                            final byte[] salt,
+                            final int opslimit,
+                            final long memlimit) {
+        final byte[] buffer = new byte[length];
         sodium().crypto_pwhash_scryptsalsa208sha256(buffer, buffer.length, passwd, passwd.length, salt, opslimit, memlimit);
         return buffer;
     }
 
-    public String hash(byte[] passwd, Encoder encoder, byte[] salt, int opslimit, long memlimit) {
-        byte[] buffer = deriveKey(CRYPTO_PWHASH_SCRYPTSALSA208SHA256_OUTBYTES, passwd, salt, opslimit, memlimit);
+    @IgnoreError
+    public String hash(final byte[] passwd,
+                       final Encoder encoder,
+                       final byte[] salt,
+                       final int opslimit,
+                       final long memlimit) {
+        final byte[] buffer = deriveKey(CRYPTO_PWHASH_SCRYPTSALSA208SHA256_OUTBYTES, passwd, salt, opslimit, memlimit);
         return encoder.encode(buffer);
     }
 
-    public String hash(int length, byte[] passwd, Encoder encoder, byte[] salt, int opslimit, long memlimit) {
-        byte[] buffer = deriveKey(length, passwd, salt, opslimit, memlimit);
+    @IgnoreError
+    public String hash(final int length,
+                       final byte[] passwd,
+                       final Encoder encoder,
+                       final byte[] salt,
+                       final int opslimit,
+                       final long memlimit) {
+        final byte[] buffer = deriveKey(length, passwd, salt, opslimit, memlimit);
         return encoder.encode(buffer);
     }
 
-    public String hash(byte[] passwd, Encoder encoder, int opslimit, long memlimit) {
-        byte[] buffer = new byte[CRYPTO_PWHASH_SCRYPTSALSA208SHA256_STRBYTES];
+    @IgnoreError
+    public String hash(final byte[] passwd,
+                       final Encoder encoder,
+                       final int opslimit,
+                       final long memlimit) {
+        final byte[] buffer = new byte[CRYPTO_PWHASH_SCRYPTSALSA208SHA256_STRBYTES];
         sodium().crypto_pwhash_scryptsalsa208sha256_str(buffer, passwd, passwd.length, opslimit, memlimit);
         return encoder.encode(buffer);
     }
 
-    public boolean verify(byte[] hashed_passwd, byte[] passwd) {
-        int result = sodium().crypto_pwhash_scryptsalsa208sha256_str_verify(hashed_passwd, passwd, passwd.length);
+    @IgnoreError
+    public boolean verify(final byte[] hashed_passwd,
+                          final byte[] passwd) {
+        final int result = sodium().crypto_pwhash_scryptsalsa208sha256_str_verify(hashed_passwd, passwd, passwd.length);
         return result == 0;
     }
 }

@@ -16,6 +16,7 @@
 
 package org.abstractj.kalium.crypto;
 
+import jnr.ffi.annotations.IgnoreError;
 import org.abstractj.kalium.encoders.Encoder;
 
 import static org.abstractj.kalium.NaCl.Sodium.*;
@@ -23,46 +24,58 @@ import static org.abstractj.kalium.NaCl.sodium;
 
 public class Hash {
 
-    public byte[] sha256(byte[] message) {
-        byte[] buffer = new byte[CRYPTO_HASH_SHA256_BYTES];
+    @IgnoreError
+    public byte[] sha256(final byte[] message) {
+        final byte[] buffer = new byte[CRYPTO_HASH_SHA256_BYTES];
         sodium().crypto_hash_sha256(buffer, message, message.length);
         return buffer;
     }
 
-    public byte[] sha512(byte[] message) {
-        byte[] buffer = new byte[CRYPTO_HASH_SHA512_BYTES];
+    @IgnoreError
+    public byte[] sha512(final byte[] message) {
+        final byte[] buffer = new byte[CRYPTO_HASH_SHA512_BYTES];
         sodium().crypto_hash_sha512(buffer, message, message.length);
         return buffer;
     }
 
-    public String sha256(String message, Encoder encoder) {
-        byte[] hash = sha256(message.getBytes());
+    @IgnoreError
+    public String sha256(final String message,
+                         final Encoder encoder) {
+        final byte[] hash = sha256(message.getBytes());
         return encoder.encode(hash);
     }
 
-    public String sha512(String message, Encoder encoder) {
-        byte[] hash = sha512(message.getBytes());
+    @IgnoreError
+    public String sha512(final String message,
+                         final Encoder encoder) {
+        final byte[] hash = sha512(message.getBytes());
         return encoder.encode(hash);
     }
 
-
-    public byte[] blake2(byte[] message) throws UnsupportedOperationException {
-        byte[] buffer = new byte[CRYPTO_GENERICHASH_BLAKE2B_BYTES];
+    @IgnoreError
+    public byte[] blake2(final byte[] message) throws UnsupportedOperationException {
+        final byte[] buffer = new byte[CRYPTO_GENERICHASH_BLAKE2B_BYTES];
         sodium().crypto_generichash_blake2b(buffer, CRYPTO_GENERICHASH_BLAKE2B_BYTES, message, message.length, null, 0);
         return buffer;
     }
 
-    public String blake2(String message, Encoder encoder) throws UnsupportedOperationException {
-        byte[] hash = blake2(message.getBytes());
+    @IgnoreError
+    public String blake2(final String message,
+                         final Encoder encoder) throws UnsupportedOperationException {
+        final byte[] hash = blake2(message.getBytes());
         return encoder.encode(hash);
     }
 
-    public byte[] blake2(byte[] message, byte[] key, byte[] salt, byte[] personal) throws UnsupportedOperationException {
-        byte[] buffer = new byte[CRYPTO_GENERICHASH_BLAKE2B_BYTES];
+    @IgnoreError
+    public byte[] blake2(final byte[] message,
+                         final byte[] key,
+                         final byte[] salt,
+                         final byte[] personal) throws UnsupportedOperationException {
+        final byte[] buffer = new byte[CRYPTO_GENERICHASH_BLAKE2B_BYTES];
         sodium().crypto_generichash_blake2b_salt_personal(buffer, CRYPTO_GENERICHASH_BLAKE2B_BYTES,
-                                                          message, message.length,
-                                                          key, key.length,
-                                                          salt, personal);
+                message, message.length,
+                key, key.length,
+                salt, personal);
         return buffer;
     }
 }

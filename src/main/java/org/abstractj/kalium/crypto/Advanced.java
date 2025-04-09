@@ -15,6 +15,8 @@
  */
 package org.abstractj.kalium.crypto;
 
+import jnr.ffi.annotations.IgnoreError;
+
 import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_STREAM_KEYBYTES;
 import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_STREAM_NONCEBYTES;
 import static org.abstractj.kalium.NaCl.sodium;
@@ -22,13 +24,14 @@ import static org.abstractj.kalium.crypto.Util.checkLength;
 
 public class Advanced {
 
-    public byte[] crypto_stream_xsalsa20_xor(final byte[] message, final byte[] nonce, final byte[] key) {
-
+    @IgnoreError
+    public byte[] crypto_stream_xsalsa20_xor(final byte[] message,
+                                             final byte[] nonce,
+                                             final byte[] key) {
         checkLength(nonce, CRYPTO_STREAM_NONCEBYTES);
         checkLength(key, CRYPTO_STREAM_KEYBYTES);
-        byte[] buffer = new byte[message.length];
+        final byte[] buffer = new byte[message.length];
         sodium().crypto_stream_xor(buffer, message, message.length, nonce, key);
         return buffer;
-
     }
 }

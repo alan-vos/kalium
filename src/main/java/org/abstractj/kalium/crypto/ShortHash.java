@@ -16,6 +16,8 @@
 
 package org.abstractj.kalium.crypto;
 
+import jnr.ffi.annotations.IgnoreError;
+
 import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_SHORTHASH_SIPHASH24_BYTES;
 import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_SHORTHASH_SIPHASH24_KEYBYTES;
 import static org.abstractj.kalium.NaCl.sodium;
@@ -24,8 +26,10 @@ import static org.abstractj.kalium.crypto.Util.isValid;
 
 public class ShortHash {
 
-    public byte[] siphash24(byte[] message, byte[] key) {
-        byte[] buffer = new byte[CRYPTO_SHORTHASH_SIPHASH24_BYTES];
+    @IgnoreError
+    public byte[] siphash24(final byte[] message,
+                            final byte[] key) {
+        final byte[] buffer = new byte[CRYPTO_SHORTHASH_SIPHASH24_BYTES];
         checkLength(key, CRYPTO_SHORTHASH_SIPHASH24_KEYBYTES);
         isValid(sodium().crypto_shorthash_siphash24(buffer, message, message.length, key), "Hashing failed");
         return buffer;
