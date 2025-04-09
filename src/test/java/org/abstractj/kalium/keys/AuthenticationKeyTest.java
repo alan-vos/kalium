@@ -24,9 +24,7 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_AUTH_HMACSHA512256_KEYBYTES;
 import static org.abstractj.kalium.encoders.Encoder.HEX;
-import static org.abstractj.kalium.fixture.TestVectors.AUTH_HMAC_SHA512256;
-import static org.abstractj.kalium.fixture.TestVectors.AUTH_KEY;
-import static org.abstractj.kalium.fixture.TestVectors.AUTH_MESSAGE;
+import static org.abstractj.kalium.fixture.TestVectors.*;
 import static org.junit.Assert.fail;
 
 public class AuthenticationKeyTest {

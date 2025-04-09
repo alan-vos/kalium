@@ -16,9 +16,9 @@
 
 package org.abstractj.kalium.crypto;
 
-import static org.abstractj.kalium.NaCl.sodium;
 import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_SHORTHASH_SIPHASH24_BYTES;
 import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_SHORTHASH_SIPHASH24_KEYBYTES;
+import static org.abstractj.kalium.NaCl.sodium;
 import static org.abstractj.kalium.crypto.Util.checkLength;
 import static org.abstractj.kalium.crypto.Util.isValid;
 

@@ -20,13 +20,9 @@ import jnr.ffi.byref.LongLongByReference;
 import org.abstractj.kalium.crypto.Random;
 import org.abstractj.kalium.encoders.Encoder;
 
-import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES;
-import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES;
-import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_SIGN_ED25519_BYTES;
+import static org.abstractj.kalium.NaCl.Sodium.*;
 import static org.abstractj.kalium.NaCl.sodium;
-import static org.abstractj.kalium.crypto.Util.checkLength;
-import static org.abstractj.kalium.crypto.Util.isValid;
-import static org.abstractj.kalium.crypto.Util.zeros;
+import static org.abstractj.kalium.crypto.Util.*;
 import static org.abstractj.kalium.encoders.Encoder.HEX;
 
 public class SigningKey {

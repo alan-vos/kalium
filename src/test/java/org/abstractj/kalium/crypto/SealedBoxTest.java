@@ -1,13 +1,14 @@
 package org.abstractj.kalium.crypto;
 
+import org.abstractj.kalium.keys.KeyPair;
+import org.junit.Test;
+
+import java.security.SecureRandom;
+
 import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES;
 import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES;
 import static org.abstractj.kalium.NaCl.sodium;
 import static org.junit.Assert.assertArrayEquals;
-
-import java.security.SecureRandom;
-import org.abstractj.kalium.keys.KeyPair;
-import org.junit.Test;
 
 public class SealedBoxTest {
 

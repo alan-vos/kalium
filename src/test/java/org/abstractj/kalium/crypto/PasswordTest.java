@@ -3,13 +3,9 @@ package org.abstractj.kalium.crypto;
 import org.abstractj.kalium.NaCl;
 import org.junit.Test;
 
-import static org.junit.Assert.assertTrue;
 import static org.abstractj.kalium.encoders.Encoder.HEX;
 import static org.abstractj.kalium.fixture.TestVectors.*;
-import static org.abstractj.kalium.fixture.TestVectors.PWHASH_MESSAGE;
-import static org.abstractj.kalium.fixture.TestVectors.PWHASH_SALT;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Created by abstractj on 8/5/15.

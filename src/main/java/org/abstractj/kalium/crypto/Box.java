@@ -21,16 +21,9 @@ import org.abstractj.kalium.encoders.Encoder;
 import org.abstractj.kalium.keys.PrivateKey;
 import org.abstractj.kalium.keys.PublicKey;
 
-import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_BOXZEROBYTES;
-import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_NONCEBYTES;
-import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES;
-import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES;
-import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_ZEROBYTES;
+import static org.abstractj.kalium.NaCl.Sodium.*;
 import static org.abstractj.kalium.NaCl.sodium;
-import static org.abstractj.kalium.crypto.Util.checkLength;
-import static org.abstractj.kalium.crypto.Util.isValid;
-import static org.abstractj.kalium.crypto.Util.prependZeros;
-import static org.abstractj.kalium.crypto.Util.removeZeros;
+import static org.abstractj.kalium.crypto.Util.*;
 
 /**
  * Based on Curve25519XSalsa20Poly1305 and Box classes from rbnacl

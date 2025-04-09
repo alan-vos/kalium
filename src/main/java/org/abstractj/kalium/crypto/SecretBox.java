@@ -18,14 +18,9 @@ package org.abstractj.kalium.crypto;
 
 import org.abstractj.kalium.encoders.Encoder;
 
-import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_BOXZEROBYTES;
-import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_SECRETBOX_XSALSA20POLY1305_NONCEBYTES;
-import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_SECRETBOX_XSALSA20POLY1305_KEYBYTES;
-import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_ZEROBYTES;
+import static org.abstractj.kalium.NaCl.Sodium.*;
 import static org.abstractj.kalium.NaCl.sodium;
-import static org.abstractj.kalium.crypto.Util.checkLength;
-import static org.abstractj.kalium.crypto.Util.isValid;
-import static org.abstractj.kalium.crypto.Util.removeZeros;
+import static org.abstractj.kalium.crypto.Util.*;
 
 public class SecretBox {
 

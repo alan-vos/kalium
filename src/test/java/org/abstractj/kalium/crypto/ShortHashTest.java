@@ -19,11 +19,7 @@ package org.abstractj.kalium.crypto;
 import org.junit.Test;
 
 import static org.abstractj.kalium.encoders.Encoder.HEX;
-import static org.abstractj.kalium.fixture.TestVectors.SIPHASH24_KEY;
-import static org.abstractj.kalium.fixture.TestVectors.SIPHASH24_MESSAGE;
-import static org.abstractj.kalium.fixture.TestVectors.SIPHASH24_DIGEST;
-import static org.abstractj.kalium.fixture.TestVectors.SIPHASH24_DIGEST_EMPTY_STRING;
-
+import static org.abstractj.kalium.fixture.TestVectors.*;
 import static org.junit.Assert.assertEquals;
 
 public class ShortHashTest {

@@ -23,13 +23,7 @@ import org.junit.Test;
 import java.util.Arrays;
 
 import static org.abstractj.kalium.encoders.Encoder.HEX;
-import static org.abstractj.kalium.fixture.TestVectors.ALICE_PRIVATE_KEY;
-import static org.abstractj.kalium.fixture.TestVectors.ALICE_PUBLIC_KEY;
-import static org.abstractj.kalium.fixture.TestVectors.BOB_PRIVATE_KEY;
-import static org.abstractj.kalium.fixture.TestVectors.BOB_PUBLIC_KEY;
-import static org.abstractj.kalium.fixture.TestVectors.BOX_CIPHERTEXT;
-import static org.abstractj.kalium.fixture.TestVectors.BOX_MESSAGE;
-import static org.abstractj.kalium.fixture.TestVectors.BOX_NONCE;
+import static org.abstractj.kalium.fixture.TestVectors.*;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 

@@ -21,10 +21,7 @@ import org.junit.Test;
 import java.util.Arrays;
 
 import static org.abstractj.kalium.encoders.Encoder.HEX;
-import static org.abstractj.kalium.fixture.TestVectors.ALICE_MULT_BOB;
-import static org.abstractj.kalium.fixture.TestVectors.ALICE_PRIVATE_KEY;
-import static org.abstractj.kalium.fixture.TestVectors.ALICE_PUBLIC_KEY;
-import static org.abstractj.kalium.fixture.TestVectors.BOB_PUBLIC_KEY;
+import static org.abstractj.kalium.fixture.TestVectors.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 

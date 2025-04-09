@@ -19,9 +19,7 @@ package org.abstractj.kalium.keys;
 import org.junit.Test;
 
 import static org.abstractj.kalium.encoders.Encoder.HEX;
-import static org.abstractj.kalium.fixture.TestVectors.SIGN_MESSAGE;
-import static org.abstractj.kalium.fixture.TestVectors.SIGN_PUBLIC;
-import static org.abstractj.kalium.fixture.TestVectors.SIGN_SIGNATURE;
+import static org.abstractj.kalium.fixture.TestVectors.*;
 import static org.junit.Assert.*;
 
 public class VerifyKeyTest {

@@ -1,7 +1,5 @@
 package org.abstractj.kalium.keys;
 
-import static org.abstractj.kalium.encoders.Encoder.HEX;
-
 /**
  * Copyright 2013 Bruno Oliveira, and individual contributors
  * <p>
