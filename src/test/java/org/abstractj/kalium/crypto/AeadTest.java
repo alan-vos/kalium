@@ -10,7 +10,7 @@ import static org.junit.Assert.assertArrayEquals;
 
 public class AeadTest {
     @Test
-    public void testEncrypt() throws Exception {
+    public void testEncrypt() {
         byte[] key = HEX.decode(AEAD_KEY);
         byte[] publicNonce = HEX.decode(AEAD_NONCE);
         byte[] message = HEX.decode(AEAD_MESSAGE);
@@ -22,7 +22,7 @@ public class AeadTest {
     }
 
     @Test
-    public void testDecrypt() throws Exception {
+    public void testDecrypt() {
         byte[] key = HEX.decode(AEAD_KEY);
         byte[] publicNonce = HEX.decode(AEAD_NONCE);
         byte[] ct = HEX.decode(AEAD_CT);
@@ -34,7 +34,7 @@ public class AeadTest {
     }
 
     @Test
-    public void testAES256GCM() throws Exception {
+    public void testAES256GCM() {
         sodium().sodium_init();
         if (sodium().crypto_aead_aes256gcm_is_available() != 1) {
             System.out.println("AES256-GCM is not supported");
