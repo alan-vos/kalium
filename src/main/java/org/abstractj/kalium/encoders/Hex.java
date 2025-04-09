@@ -50,13 +50,10 @@ public class Hex implements Encoder {
     private static byte[] decodeHex(final char[] data) {
 
         final int len = (data == null) ? 0 : data.length;
-
         if ((len & 0x01) != 0) {
             throw new RuntimeException("Odd number of characters.");
         }
-
         final byte[] out = new byte[len >> 1];
-
         // two characters form the hex value.
         for (int i = 0, j = 0; j < len; i++) {
             int f = toDigit(data[j], j) << 4;
@@ -65,14 +62,12 @@ public class Hex implements Encoder {
             j++;
             out[i] = (byte) (f & 0xFF);
         }
-
         return out;
     }
 
     @Override
     public byte[] decode(final String value) {
-
-        char[] data = value != null ? value.toCharArray() : new char[0];
+        final char[] data = value != null ? value.toCharArray() : new char[0];
         return decodeHex(data);
     }
 
@@ -98,7 +93,8 @@ public class Hex implements Encoder {
      * @return A char[] containing hexadecimal characters
      * @since 1.4
      */
-    private static char[] encodeHex(final byte[] data, final boolean toLowerCase) {
+    private static char[] encodeHex(final byte[] data,
+                                    final boolean toLowerCase) {
         return encodeHex(data, toLowerCase ? DIGITS_LOWER : DIGITS_UPPER);
     }
 
@@ -112,7 +108,8 @@ public class Hex implements Encoder {
      * @return A char[] containing hexadecimal characters
      * @since 1.4
      */
-    private static char[] encodeHex(final byte[] data, final char[] toDigits) {
+    private static char[] encodeHex(final byte[] data,
+                                    final char[] toDigits) {
         final int l = data.length;
         final char[] out = new char[l << 1];
         // two characters form the hex value.
@@ -143,7 +140,8 @@ public class Hex implements Encoder {
      * @param index The index of the character in the source
      * @return An integer
      */
-    private static int toDigit(final char ch, final int index) {
+    private static int toDigit(final char ch,
+                               final int index) {
         final int digit = Character.digit(ch, 16);
         if (digit == -1) {
             throw new RuntimeException("Illegal hexadecimal character " + ch + " at index " + index);

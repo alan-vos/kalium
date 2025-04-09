@@ -24,12 +24,12 @@ public class PrivateKey implements Key {
 
     private final byte[] secretKey;
 
-    public PrivateKey(byte[] secretKey) {
+    public PrivateKey(final byte[] secretKey) {
         this.secretKey = secretKey;
         checkLength(secretKey, CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES);
     }
 
-    public PrivateKey(String secretKey) {
+    public PrivateKey(final String secretKey) {
         this.secretKey = HEX.decode(secretKey);
         checkLength(this.secretKey, CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES);
     }

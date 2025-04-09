@@ -16,6 +16,7 @@
 
 package org.abstractj.kalium.keys;
 
+import jnr.ffi.annotations.IgnoreError;
 import org.abstractj.kalium.encoders.Encoder;
 
 import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_AUTH_HMACSHA512256_BYTES;
@@ -30,32 +31,38 @@ public class AuthenticationKey implements Key {
 
     private final byte[] key;
 
-    public AuthenticationKey(byte[] key) {
+    public AuthenticationKey(final byte[] key) {
         this.key = key;
         checkLength(key, CRYPTO_AUTH_HMACSHA512256_KEYBYTES);
     }
 
-    public AuthenticationKey(String key, Encoder encoder) {
+    public AuthenticationKey(final String key,
+                             final Encoder encoder) {
         this(encoder.decode(key));
     }
 
-    public byte[] sign(byte[] message) {
-        byte[] mac = new byte[CRYPTO_AUTH_HMACSHA512256_BYTES];
+    @IgnoreError
+    public byte[] sign(final byte[] message) {
+        final byte[] mac = new byte[CRYPTO_AUTH_HMACSHA512256_BYTES];
         sodium().crypto_auth_hmacsha512256(mac, message, message.length, key);
         return mac;
     }
 
-    public String sign(String message, Encoder encoder) {
-        byte[] signature = sign(encoder.decode(message));
+    public String sign(final String message,
+                       final Encoder encoder) {
+        final byte[] signature = sign(encoder.decode(message));
         return encoder.encode(signature);
     }
 
-    public boolean verify(byte[] message, byte[] signature) {
+    public boolean verify(final byte[] message,
+                          final byte[] signature) {
         checkLength(signature, CRYPTO_AUTH_HMACSHA512256_BYTES);
         return isValid(sodium().crypto_auth_hmacsha512256_verify(signature, message, message.length, key), "signature was forged or corrupted");
     }
 
-    public boolean verify(String message, String signature, Encoder encoder) {
+    public boolean verify(final String message,
+                          final String signature,
+                          final Encoder encoder) {
         return verify(encoder.decode(message), encoder.decode(signature));
     }
 

@@ -16,6 +16,7 @@
 
 package org.abstractj.kalium.keys;
 
+import jnr.ffi.annotations.IgnoreError;
 import org.abstractj.kalium.crypto.Point;
 import org.abstractj.kalium.encoders.Encoder;
 
@@ -30,20 +31,22 @@ public class KeyPair {
     private final byte[] publicKey;
     private final byte[] secretKey;
 
+    @IgnoreError
     public KeyPair() {
         this.secretKey = zeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES);
         this.publicKey = zeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES);
         sodium().crypto_box_curve25519xsalsa20poly1305_keypair(publicKey, secretKey);
     }
 
-    public KeyPair(byte[] secretKey) {
+    public KeyPair(final byte[] secretKey) {
         this.secretKey = secretKey;
         checkLength(this.secretKey, CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES);
-        Point point = new Point();
+        final Point point = new Point();
         this.publicKey = point.mult(secretKey).toBytes();
     }
 
-    public KeyPair(String secretKey, Encoder encoder) {
+    public KeyPair(final String secretKey,
+                   final Encoder encoder) {
         this(encoder.decode(secretKey));
     }
 

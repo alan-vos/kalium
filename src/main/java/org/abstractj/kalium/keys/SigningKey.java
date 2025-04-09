@@ -16,6 +16,7 @@
 
 package org.abstractj.kalium.keys;
 
+import jnr.ffi.annotations.IgnoreError;
 import jnr.ffi.byref.LongLongByReference;
 import org.abstractj.kalium.crypto.Random;
 import org.abstractj.kalium.encoders.Encoder;
@@ -31,14 +32,14 @@ public class SigningKey {
     private final byte[] secretKey;
     private final VerifyKey verifyKey;
 
-    public SigningKey(byte[] seed) {
+    @IgnoreError
+    public SigningKey(final byte[] seed) {
         checkLength(seed, CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES);
         this.seed = seed;
         this.secretKey = zeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES * 2);
-        byte[] publicKey = zeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES);
+        final byte[] publicKey = zeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES);
         isValid(sodium().crypto_sign_ed25519_seed_keypair(publicKey, secretKey, seed),
                 "Failed to generate a key pair");
-
         this.verifyKey = new VerifyKey(publicKey);
     }
 
@@ -46,7 +47,8 @@ public class SigningKey {
         this(new Random().randomBytes(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES));
     }
 
-    public SigningKey(String seed, Encoder encoder) {
+    public SigningKey(final String seed,
+                      final Encoder encoder) {
         this(encoder.decode(seed));
     }
 
@@ -54,15 +56,17 @@ public class SigningKey {
         return this.verifyKey;
     }
 
-    public byte[] sign(byte[] message) {
-        byte[] signature = new byte[CRYPTO_SIGN_ED25519_BYTES];
+    @IgnoreError
+    public byte[] sign(final byte[] message) {
+        final byte[] signature = new byte[CRYPTO_SIGN_ED25519_BYTES];
         LongLongByReference bufferLen = new LongLongByReference(0);
         sodium().crypto_sign_ed25519_detached(signature, bufferLen, message, message.length, secretKey);
         return signature;
     }
 
-    public String sign(String message, Encoder encoder) {
-        byte[] signature = sign(encoder.decode(message));
+    public String sign(final String message,
+                       final Encoder encoder) {
+        final byte[] signature = sign(encoder.decode(message));
         return encoder.encode(signature);
     }
 

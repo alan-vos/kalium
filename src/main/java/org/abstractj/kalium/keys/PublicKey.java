@@ -24,12 +24,12 @@ public class PublicKey implements Key {
 
     private final byte[] publicKey;
 
-    public PublicKey(byte[] publicKey) {
+    public PublicKey(final byte[] publicKey) {
         this.publicKey = publicKey;
         checkLength(publicKey, CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES);
     }
 
-    public PublicKey(String publicKey) {
+    public PublicKey(final String publicKey) {
         this.publicKey = HEX.decode(publicKey);
     }
 

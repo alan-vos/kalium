@@ -29,21 +29,25 @@ public class VerifyKey {
 
     private final byte[] key;
 
-    public VerifyKey(byte[] key) {
+    public VerifyKey(final byte[] key) {
         checkLength(key, CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES);
         this.key = key;
     }
 
-    public VerifyKey(String key, Encoder encoder) {
+    public VerifyKey(final String key,
+                     final Encoder encoder) {
         this(encoder.decode(key));
     }
 
-    public boolean verify(byte[] message, byte[] signature) {
+    public boolean verify(final byte[] message,
+                          final byte[] signature) {
         checkLength(signature, CRYPTO_SIGN_ED25519_BYTES);
         return isValid(sodium().crypto_sign_ed25519_verify_detached(signature, message, message.length, key), "signature was forged or corrupted");
     }
 
-    public boolean verify(String message, String signature, Encoder encoder) {
+    public boolean verify(final String message,
+                          final String signature,
+                          final Encoder encoder) {
         return verify(encoder.decode(message), encoder.decode(signature));
     }
 

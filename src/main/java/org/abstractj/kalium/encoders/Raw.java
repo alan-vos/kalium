@@ -23,7 +23,7 @@ public class Raw implements Encoder {
     }
 
     @Override
-    public String encode(byte[] data) {
+    public String encode(final byte[] data) {
         return data != null ? new String(data, CHARSET) : null;
     }
 }
