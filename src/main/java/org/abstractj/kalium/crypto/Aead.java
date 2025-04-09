@@ -26,6 +26,7 @@ public class Aead {
     }
 
     public Aead useAesGcm() {
+        // This works now.
         aesGcm = true;
         return this;
     }
