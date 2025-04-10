@@ -106,6 +106,7 @@
         </plugins>
     </build>
 
+    <!-- We deploy to our internal team Nexus repository -->
     <distributionManagement>
         <repository>
             <id>nexus</id>
