@@ -33,13 +33,13 @@ public class RawTest {
     }
 
     @Test
-    public void testEncode() throws Exception {
+    public void testEncode() {
         String value = "hello";
         assertEquals(value, encoder.encode(value.getBytes()));
     }
 
     @Test
-    public void testEncodeNullString() throws Exception {
+    public void testEncodeNullString() {
         byte[] value = null;
         try {
             assertNull(encoder.encode(value));
@@ -49,18 +49,17 @@ public class RawTest {
     }
 
     @Test
-    public void testDecode() throws Exception {
+    public void testDecode() {
         String value = "hello";
         assertTrue(Arrays.equals(encoder.decode(value), value.getBytes()));
     }
 
     @Test
-    public void testDecodeNullString() throws Exception {
+    public void testDecodeNullString() {
         String value = null;
         try {
             assertNull(encoder.decode(value));
         } catch (Exception e) {
-            e.printStackTrace();
             fail("Should not raise any exception");
         }
     }
