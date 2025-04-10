@@ -16,6 +16,7 @@
 
 package org.abstractj.kalium.crypto;
 
+import jnr.ffi.annotations.IgnoreError;
 import org.abstractj.kalium.encoders.Encoder;
 
 import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_SCALARMULT_CURVE25519_SCALARBYTES;
@@ -42,6 +43,7 @@ public class Point {
         this(encoder.decode(point));
     }
 
+    @IgnoreError
     public Point mult(final byte[] n) {
         final byte[] result = zeros(CRYPTO_SCALARMULT_CURVE25519_SCALARBYTES);
         sodium().crypto_scalarmult_curve25519(result, n, point);

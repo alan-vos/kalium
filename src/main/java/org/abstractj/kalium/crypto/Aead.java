@@ -13,6 +13,7 @@ public class Aead {
     private final byte[] key;
     private boolean aesGcm = false;
 
+    @IgnoreError
     public Aead(final byte[] key) {
         this.key = key;
         // both CHACHAPOLY and AESGCM use 32 byte keys
